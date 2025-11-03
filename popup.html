@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quick Notes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Daily Motivation:</h2>
+    <div id="motivational-thought"></div>
+
+    <h2>Quick Notes</h2>
+    <div id="input-container">
+        <input type="text" id="note-input" placeholder="Enter your note and press Enter...">
+        <button id="save-btn">Save</button>
+    </div>
+
+    <div id="highlight-controls" style="padding: 10px 0; border-top: 1px dashed #ccc; margin-top: 10px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <label for="highlight-color">Highlight Color:</label>
+            <input type="color" id="highlight-color" value="#FFFF00" style="width: 40px; height: 30px; padding: 0;">
+        </div>
+        <button id="apply-highlight-btn" style="width: 100%; padding: 8px; background-color: #33aaff; color: white; border: none; border-radius: 4px; margin-bottom: 5px; cursor: pointer;">Apply Note Highlights to Page</button>
+        <button id="remove-highlight-btn" style="width: 100%; padding: 8px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">Remove All Page Highlights</button>
+    </div>
+
+    <h3>Your Saved Notes:</h3>
+    <ul id="notes-list">
+        </ul>
+    
+    <script src="popup.js"></script>
+</body>
+</html>
