@@ -1,4 +1,4 @@
-// --- MOTIVATIONAL THOUGHTS DATA ---
+
 const motivationalQuotes = [
     "The best way to predict the future is to create it.",
     "The journey of a thousand miles begins with a single step.",
@@ -21,20 +21,17 @@ function getRandomLightColor() {
     return `hsl(${h}, 70%, 90%)`; 
 }
 
-// --- Storage Handlers ---
-// Retrieves both notes and highlight color from storage
+
 function getNotes(callback) {
     chrome.storage.sync.get({'quickNotes': [], 'highlightColor': '#FFFF00'}, callback);
 }
 
-// Saves the updated notes array
+
 function saveNotes(notesArray, callback) {
     chrome.storage.sync.set({'quickNotes': notesArray}, callback);
 }
 
-// --- Core Logic Functions ---
 
-// Handles saving a new note to storage
 function saveNote() {
     const noteInput = document.getElementById('note-input');
     const newNoteText = noteInput.value.trim();
@@ -49,7 +46,7 @@ function saveNote() {
             timestamp: now.toLocaleString() 
         };
         
-        // Asynchronously get existing notes, add new note, then save
+        
         chrome.storage.sync.get('quickNotes', function(data) {
             const notes = data.quickNotes || []; 
             notes.unshift(newNote); 
@@ -57,14 +54,14 @@ function saveNote() {
             chrome.storage.sync.set({'quickNotes': notes}, function() {
                 noteInput.value = ''; 
                 loadNotes(); 
-                // Trigger highlighting on the page immediately after saving a new note
+                
                 executeHighlightAction('highlight');
             });
         });
     }
 }
 
-// Handles deleting a note from storage
+
 function deleteNote(e) {
     const noteIdToDelete = parseInt(e.target.dataset.id); 
     
@@ -75,14 +72,14 @@ function deleteNote(e) {
             
             chrome.storage.sync.set({'quickNotes': updatedNotes}, function() {
                 loadNotes(); 
-                // Re-apply highlights after deleting a note
+                
                 executeHighlightAction('highlight');
             });
         });
     }
 }
 
-// Sets up the Intersection Observer for the note 'float-in' animation
+
 function setupIntersectionObserver(notesListItems) {
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -100,17 +97,17 @@ function setupIntersectionObserver(notesListItems) {
     });
 }
 
-// Function to handle highlighting logic on the webpage
+
 function executeHighlightAction(actionType) {
     const color = document.getElementById('highlight-color').value;
     
-    // Save the color (essential, as content.js retrieves this immediately)
+    
     chrome.storage.sync.set({'highlightColor': color}, () => {
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             if (tabs.length > 0) {
                 const tab = tabs[0];
                 if (tab.url.startsWith('http') || tab.url.startsWith('https')) {
-                    // Execute content.js (ensuring it's loaded in the tab)
+                   
                     chrome.scripting.executeScript({
                         target: {tabId: tab.id},
                         files: ['content.js']
@@ -119,11 +116,11 @@ function executeHighlightAction(actionType) {
                             console.error("Script execution failed:", chrome.runtime.lastError.message);
                             return;
                         }
-                        // Send message to trigger the specific action in content.js
+                      
                         chrome.tabs.sendMessage(tab.id, {action: actionType});
                     });
                 } else {
-                    // Alert when trying to highlight a restricted page
+                    
                     alert(`Cannot perform this action on a restricted page.`);
                 }
             }
@@ -131,7 +128,7 @@ function executeHighlightAction(actionType) {
     });
 }
 
-// Loads notes and color, displays them, and sets up click handlers
+
 function loadNotes() {
     getNotes(data => {
         const notes = data.quickNotes;
@@ -156,7 +153,7 @@ function loadNotes() {
             const contentWrapper = document.createElement('div');
             contentWrapper.className = 'note-content-wrapper';
 
-            // Note Text (Dictionary Lookup Feature)
+          
             const noteText = document.createElement('span');
             noteText.className = 'note-text clickable-note';
             noteText.textContent = note.text;
@@ -165,12 +162,12 @@ function loadNotes() {
             
             noteText.onclick = function() {
                 const lookupText = this.textContent.trim();
-                // Opens a Google search for the definition of the note text
+              
                 const dictionaryUrl = `https://www.google.com/search?q=define+${encodeURIComponent(lookupText)}`;
                 window.open(dictionaryUrl, '_blank');
             };
             
-            // Timestamp and Delete Button
+
             const noteTimestamp = document.createElement('small');
             noteTimestamp.className = 'note-timestamp';
             noteTimestamp.textContent = note.timestamp || 'Time Not Available'; 
@@ -180,7 +177,7 @@ function loadNotes() {
             deleteButton.textContent = 'Delete'; 
             deleteButton.dataset.id = note.id; 
             
-            deleteButton.addEventListener('click', deleteNote); // Uses the defined deleteNote function
+            deleteButton.addEventListener('click', deleteNote); 
 
             contentWrapper.appendChild(noteText);
             contentWrapper.appendChild(noteTimestamp);
@@ -195,7 +192,7 @@ function loadNotes() {
     });
 }
 
-// --- INITIALIZATION and EVENT LISTENERS ---
+
 document.getElementById('note-input').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         e.preventDefault(); 
@@ -205,11 +202,12 @@ document.getElementById('note-input').addEventListener('keypress', function(e) {
 
 document.getElementById('save-btn').addEventListener('click', saveNote);
 
-// Event listeners for the new Highlight Control buttons
+
 document.getElementById('apply-highlight-btn').addEventListener('click', () => executeHighlightAction('highlight'));
 document.getElementById('remove-highlight-btn').addEventListener('click', () => executeHighlightAction('remove'));
 
 document.addEventListener('DOMContentLoaded', function() {
     displayMotivationalThought(); 
     loadNotes();
+
 });
