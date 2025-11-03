@@ -1,0 +1,223 @@
+/* --- Base Theme & Typography --- */
+body {
+    width: 350px; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 15px;
+    background-color: #FFFFFF; /* Pure White Background */
+    color: #333333;
+}
+
+h3, h2 {
+    color: #007bff; /* Primary Blue for Headings */
+    padding-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    border-bottom: 1px solid #e0f7ff; /* Very Light Blue Separator */
+}
+
+/* --- Motivational Thought --- */
+#motivational-thought {
+    text-align: center;
+    font-style: italic;
+    font-size: 13px;
+    color: #555;
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    background-color: #f0f8ff; /* Lightest Blue Background */
+    border: 1px solid #b3e0ff;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Input and Save Button Container --- */
+#input-container {
+    display: flex;
+    gap: 10px; 
+    margin-bottom: 15px;
+}
+
+#note-input {
+    flex-grow: 1; 
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #cce5ff; /* Light Blue Border */
+    border-radius: 4px;
+    height: 40px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+#note-input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+#save-btn {
+    padding: 0 15px;
+    background-color: #007bff; /* Primary Blue Button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease, transform 0.1s;
+    height: 40px; 
+    flex-shrink: 0; 
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+#save-btn:hover {
+    background-color: #0056b3; 
+    transform: translateY(-1px);
+}
+
+/* --- Highlight Controls Section Styling --- */
+#highlight-controls {
+    padding: 10px 0; 
+    border-top: 1px dashed #cce5ff;
+    margin-top: 10px;
+}
+
+#highlight-controls label {
+    font-weight: 600;
+    color: #007bff;
+}
+
+#apply-highlight-btn {
+    background-color: #28a745; /* Green for Apply/Go */
+    transition: background-color 0.2s ease;
+    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+}
+
+#apply-highlight-btn:hover {
+    background-color: #1e7e34;
+}
+
+#remove-highlight-btn {
+    background-color: #dc3545; /* Red for Remove/Warning */
+    transition: background-color 0.2s ease;
+    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+}
+
+#remove-highlight-btn:hover {
+    background-color: #bd2130;
+}
+
+/* Shared button styles for the new buttons (copied from popup.html inline styles) */
+#apply-highlight-btn, #remove-highlight-btn {
+    width: 100%; 
+    padding: 8px; 
+    color: white; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    margin-bottom: 5px; 
+    font-weight: bold;
+    transition: background-color 0.2s ease, transform 0.1s;
+}
+
+/* --- NOTES LIST STYLING & ANIMATION --- */
+
+@keyframes fadeInSlide {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#notes-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+    max-height: 350px; 
+    overflow-y: auto; 
+    padding-right: 5px; 
+}
+
+#notes-list li {
+    display: flex; 
+    align-items: flex-start; /* Align delete button to top */
+    gap: 10px; 
+    padding: 5px 0; 
+    margin-bottom: 10px;
+}
+
+/* Animation classes */
+.note-hidden {
+    opacity: 0;
+    transform: translateY(10px);
+}
+.note-visible {
+    animation: fadeInSlide 0.4s ease-out forwards;
+}
+
+.note-content-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; 
+    padding: 10px 15px; 
+    box-sizing: border-box;
+    border: 1px solid #cce5ff; /* Light Blue Border */
+    border-left: 5px solid #007bff; /* Primary Blue Accent */
+    border-radius: 6px;
+    transition: box-shadow 0.2s ease;
+    background-color: #f8ffff; /* Off-white / Very subtle blue */
+}
+
+.note-content-wrapper:hover {
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.15);
+}
+
+/* Note Text (Clickable Dictionary Feature) */
+.note-text {
+    display: block; 
+    word-wrap: break-word; 
+    line-height: 1.4;
+    font-size: 14px;
+    color: #333;
+    padding-bottom: 5px; 
+    cursor: pointer; 
+    border-radius: 3px;
+    padding: 2px 4px;
+    margin: -2px -4px 3px -4px; /* Adjust padding to wrap background color neatly */
+    transition: filter 0.1s;
+}
+
+.note-text:hover {
+    filter: brightness(0.98); /* Very subtle hover effect */
+}
+
+.note-timestamp {
+    display: block;
+    font-size: 10px;
+    color: #777;
+    text-align: right;
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px dashed #e0e0e0; 
+}
+
+/* --- Delete Button Style --- */
+.delete-btn {
+    background-color: #007bff; 
+    color: white; 
+    border: none; 
+    cursor: pointer;
+    font-size: 14px; 
+    width: 60px; 
+    height: 35px; /* Slightly smaller height to fit new design */
+    border-radius: 4px; 
+    line-height: 1; 
+    flex-shrink: 0; 
+    margin-top: 10px; /* Align with top of note content */
+    box-shadow: 0 1px 3px rgba(0, 123, 255, 0.2);
+}
+
+.delete-btn:hover {
+    background-color: #0056b3; 
+}
