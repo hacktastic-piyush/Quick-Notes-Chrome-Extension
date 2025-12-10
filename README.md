@@ -20,4 +20,5 @@ To use the Quick Notes, follow the steps:-<br>
 4) Now it will be added to your Chrome Extension, and you can use it.
 <h4>Note:</h4>
 <p>If you turn off the developer mode, you will not be able to use it,  you need to keep the developer mode on to use this Quick Notes Extension.</p>
-<img src="QuickNotes.jpeg" width="1000"/><br>
+<img src="QuickNotes.jpg" width="1000"/><br>
+<img src="QuickNotes2.jpg">
